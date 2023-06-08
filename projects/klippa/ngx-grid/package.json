@@ -1,6 +1,6 @@
 {
   "name": "@klippa/ngx-grid",
-  "version": "3.0.0",
+  "version": "14.0.0",
 	"publishConfig": {
 		"access": "public"
 	},
