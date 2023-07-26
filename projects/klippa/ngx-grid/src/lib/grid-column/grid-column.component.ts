@@ -40,12 +40,19 @@ export class GridColumnComponent implements OnInit, AfterViewInit, OnChanges {
 		this.setClasses();
 	}
 
-	private setClasses(): void {
+	private setClasses(prevWidths = {}, prevOffsets = {}): void {
 		const classes: string[] = [];
 
-		classes.push(...this.extractSizes(this.width, ''));
-		classes.push(...this.extractSizes(this.offset, 'offset'));
-		classes.push(...this.class.split(' '));
+		const prevWidthClasses = this.extractSizes(prevWidths, '');
+		const newWidthClasses = this.extractSizes(this.width, '');
+		const prevOffsetClasses = this.extractSizes(prevOffsets, 'offset');
+		const newOffsetClasses = this.extractSizes(this.offset, 'offset');
+
+		const classesToKeep = this.class.split(' ').filter(e => !prevWidthClasses.includes(e) && !prevOffsetClasses.includes(e));
+
+		classes.push(...newWidthClasses);
+		classes.push(...newOffsetClasses);
+		classes.push(...classesToKeep);
 
 		this.class = classes.join(' ');
 
@@ -54,7 +61,12 @@ export class GridColumnComponent implements OnInit, AfterViewInit, OnChanges {
 	}
 
 	ngOnChanges(simpleChanges: SimpleChanges): void {
-		this.setClasses();
+		if (simpleChanges.width) {
+			this.setClasses(simpleChanges.width.previousValue);
+		}
+		if (simpleChanges.offset) {
+			this.setClasses({}, simpleChanges.offset.previousValue);
+		}
 	}
 
 	ngAfterViewInit(): void {
