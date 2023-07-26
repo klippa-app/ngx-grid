@@ -3,8 +3,8 @@ import {
 	Component,
 	ElementRef,
 	HostBinding,
-	Input,
-	OnInit,
+	Input, OnChanges,
+	OnInit, SimpleChanges,
 	SkipSelf,
 } from '@angular/core';
 import {GridContainerComponent} from '../grid-container/grid-container.component';
@@ -18,7 +18,7 @@ type Sizes = Partial<Record<Size, number>>;
 	templateUrl: './grid-column.component.html',
 	styleUrls: ['./grid-column.component.scss'],
 })
-export class GridColumnComponent implements OnInit, AfterViewInit {
+export class GridColumnComponent implements OnInit, AfterViewInit, OnChanges {
 	@Input() width: Sizes = {};
 	@Input() offset: Sizes = {};
 
@@ -37,6 +37,10 @@ export class GridColumnComponent implements OnInit, AfterViewInit {
 	constructor(private self: ElementRef, private _container: GridContainerComponent) { }
 
 	ngOnInit(): void {
+		this.setClasses();
+	}
+
+	private setClasses(): void {
 		const classes: string[] = [];
 
 		classes.push(...this.extractSizes(this.width, ''));
@@ -47,6 +51,10 @@ export class GridColumnComponent implements OnInit, AfterViewInit {
 
 		this.paddingLeft = `${this._container.gutter / 2}px`;
 		this.paddingRight = `${this._container.gutter / 2}px`;
+	}
+
+	ngOnChanges(simpleChanges: SimpleChanges): void {
+		this.setClasses();
 	}
 
 	ngAfterViewInit(): void {

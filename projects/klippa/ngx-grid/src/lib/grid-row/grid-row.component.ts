@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, HostBinding, OnInit} from '@angular/core';
-import { GridContainerComponent } from '../grid-container/grid-container.component';
+import {GridContainerComponent} from '../grid-container/grid-container.component';
 
 @Component({
 	selector: 'klp-grid-row',
@@ -15,6 +15,7 @@ export class GridRowComponent implements AfterViewInit, OnInit {
 		this.marginLeft = `-${this._container.gutter / 2}px`;
 		this.marginRight = `-${this._container.gutter / 2}px`;
 	}
+
 	allChildrenAreColumns(): boolean {
 		const children: Element[] = Array.from(this.self.nativeElement.children);
 		return children.reduce((acc, child) => acc && child.matches('klp-grid-column'), true);
