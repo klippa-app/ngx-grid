@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import {GridContainerComponent} from '../grid-container/grid-container.component';
 
-type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl';
 
 type Sizes = Partial<Record<Size, number>>;
 
